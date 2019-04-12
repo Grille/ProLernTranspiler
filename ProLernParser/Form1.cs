@@ -10,15 +10,21 @@ using System.Windows.Forms;
 
 namespace ProLernParser
 {
-    public partial class Form : System.Windows.Forms.Form
+    public partial class CodeForm : System.Windows.Forms.Form
     {
-        public Form()
+        public CodeForm()
         {
             InitializeComponent();
             codeBox.MaxLength = 100000;
             textBox1.MaxLength = 100000;
             textBox1.Text = Program.Parse(codeBox.Text);
             Program.Evaluate(textBox1.Text);
+
+            this.Paint += new PaintEventHandler(paint);
+        }
+
+        private void paint(object sender,PaintEventArgs e)
+        {
 
         }
 

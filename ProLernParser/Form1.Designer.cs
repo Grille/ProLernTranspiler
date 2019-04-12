@@ -1,6 +1,6 @@
 ﻿namespace ProLernParser
 {
-    partial class Form
+    partial class CodeForm
     {
         /// <summary>
         /// Erforderliche Designervariable.
