@@ -11,6 +11,7 @@ using System.Threading;
 using System.Globalization;
 using System.Security.Permissions;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace ProLernParser
 {
@@ -45,10 +46,12 @@ namespace ProLernParser
                 bool castArray = true;
                 ref string line = ref lines[i];
                 string newLine;
+                
                 if /**/ (parse(line, out newLine, "START", "public void Run(){\r\ntry{")) { castArray = false; }
                 else if (parse(line, out newLine, "STOPP", "}catch{_S.Console.WriteLine(\"Fehler.\");_S.Console.ReadKey();}_S.Console.WriteLine(\"Bitte eine Taste druecken, um das Programm zu beenden.\");_S.Console.ReadKey();}")) ;
                 else if (parse(line, out newLine, "ENDE", "}")) ;
                 else if (parse(line, out newLine, "AUSGABE", "_S.Console.WriteLine(<#>);")) ;
+                else if (parse(line, out newLine, "AUSGABEREIHE", "_S.Console.Write(<#>);")) ;
                 else if (parse(line, out newLine, "RECHNEN", "<#>;")) ;
                 else if (parse(line, out newLine, "ZAHL", "double <#>;")) ;
                 else if (parse(line, out newLine, "WORT", "string <#>;")) ;
@@ -56,9 +59,9 @@ namespace ProLernParser
                 else if (parse(line, out newLine, "WORTEINGABE", "<#>=_S.Console.ReadLine();")) ;
                 else if (parse(line, out newLine, "ZAHLFELD", "double[] <#>;", (input) => input.Replace("[", "=new double[(int)"))) { castArray = false; }
                 else if (parse(line, out newLine, "WORTFELD", "string[] <#>;", (input) => input.Replace("[", "=new string[(int)"))) { castArray = false; }
-                else if (parse(line, out newLine, "FALLS", "if(<#>){", (input) => input.Replace("=", "==").Replace("UND", "&").Replace("ODER", "|"))) ;
+                else if (parse(line, out newLine, "FALLS", "if(<#>){", (input) => Regex.Replace(input, "[^!><=]=", "==").Replace("UND", "&&").Replace("ODER", "||"))) ;
                 else if (parse(line, out newLine, "SONST", "else{")) ;
-                else if (parse(line, out newLine, "SOLANGE", "}while(<#>);", (input) => input.Replace("=", "==").Replace("UND", "&").Replace("ODER", "|"))) ;
+                else if (parse(line, out newLine, "SOLANGE", "}while(<#>);", (input) => Regex.Replace(input, "[^!><=]=", "==").Replace("UND", "&&").Replace("ODER", "||"))) ;
                 else if (parse(line, out newLine, "WIEDERHOLE", "do{")) ;
                 else if (parse(line, out newLine, "UNTERPROGRAMM", "public void <#>{", (input) => input.Replace("ZAHLFELD", "double[]").Replace("WORTFELD", "string[]").Replace("ZAHL", "double").Replace("WORT", "string"))) { castArray = false; }
                 else if (parse(line, out newLine, "FUNKTION", "public <#>{", (input) => input.Replace("ZAHLFELD", "double[]").Replace("WORTFELD", "string[]").Replace("ZAHL", "double").Replace("WORT", "string"))) { castArray = false; }
@@ -177,7 +180,7 @@ namespace ProLernParser
             if (line.Contains(command))
             {
                 string[] split = line.Split(new string[] { command }, 2, StringSplitOptions.None);
-                if (split[0].Trim() == "" && (split[1].Trim().Length == 0 || split[1][0] == ' '))
+                if (split[0].Trim() == "" && (split[1].Trim().Length == 0 || split[1][0] == ' ' || split[1][0] == '('))
                 {
                     newLine = function(split[1]);
                     return true;

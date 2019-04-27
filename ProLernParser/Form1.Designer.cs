@@ -46,6 +46,9 @@
             this.startenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.eigenschatenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.befehlslisteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -85,6 +88,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(60)))), ((int)(((byte)(65)))));
             this.codeBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.codeBox.DetectUrls = false;
             this.codeBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.codeBox.Location = new System.Drawing.Point(3, 3);
             this.codeBox.Name = "codeBox";
@@ -93,8 +97,10 @@
             this.codeBox.TabStop = false;
             this.codeBox.Text = "START\nAUSGABE \"Hallo Welt\"\nSTOPP\n\n";
             this.codeBox.WordWrap = false;
+            this.codeBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.codeBox_MouseClick);
             this.codeBox.TextChanged += new System.EventHandler(this.richTextBoxCode_TextChanged);
             this.codeBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.codeBox_KeyUp);
+            this.codeBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.codeBox_MouseDown);
             this.codeBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.codeBox_PreviewKeyDown);
             // 
             // codeBoxCs
@@ -183,7 +189,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem,
-            this.projectToolStripMenuItem});
+            this.projectToolStripMenuItem,
+            this.extrasToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(788, 24);
@@ -223,9 +230,32 @@
             // 
             // eigenschatenToolStripMenuItem
             // 
+            this.eigenschatenToolStripMenuItem.Enabled = false;
             this.eigenschatenToolStripMenuItem.Name = "eigenschatenToolStripMenuItem";
             this.eigenschatenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.eigenschatenToolStripMenuItem.Text = "Eigenschaften";
+            // 
+            // extrasToolStripMenuItem
+            // 
+            this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionenToolStripMenuItem,
+            this.befehlslisteToolStripMenuItem});
+            this.extrasToolStripMenuItem.Enabled = false;
+            this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
+            this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.extrasToolStripMenuItem.Text = "Extras";
+            // 
+            // optionenToolStripMenuItem
+            // 
+            this.optionenToolStripMenuItem.Name = "optionenToolStripMenuItem";
+            this.optionenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionenToolStripMenuItem.Text = "Optionen";
+            // 
+            // befehlslisteToolStripMenuItem
+            // 
+            this.befehlslisteToolStripMenuItem.Name = "befehlslisteToolStripMenuItem";
+            this.befehlslisteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.befehlslisteToolStripMenuItem.Text = "Befehlsliste";
             // 
             // CodeForm
             // 
@@ -238,7 +268,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "CodeForm";
-            this.Text = "ProLernParser";
+            this.Text = "ProLern#";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CodeForm_FormClosed);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_KeyDown);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -270,6 +300,9 @@
         private System.Windows.Forms.ToolStripMenuItem startenToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem eigenschatenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extrasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem befehlslisteToolStripMenuItem;
     }
 }
 

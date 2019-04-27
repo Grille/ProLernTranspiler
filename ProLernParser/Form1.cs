@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,9 +20,16 @@ namespace ProLernParser
         Button Button = new Button() { };
         bool processHighlight = true;
         string codePath = "";
+        Encoding encoding;
+        Theme theme;
         public CodeForm()
         {
             InitializeComponent();
+            ChangeTheme(new Theme()
+            {
+                Background = Color.FromArgb(45, 60, 65), Text = Color.LightGray,
+                Calc = Color.Aquamarine, Flow = Color.SkyBlue, Type = Color.Violet, Action = Color.FromArgb(255, 255, 128), Comment = Color.LimeGreen
+            });
             codeBox.MaxLength = 100000;
             codeBoxCs.MaxLength = 100000;
             performer = new Performer();
@@ -32,6 +41,15 @@ namespace ProLernParser
             translator = new Translator();
             this.Paint += new PaintEventHandler(paint);
             splitContainer1.Panel2Collapsed = true;
+            codeBox.AutoWordSelection = false;
+            codeBox.SelectionBullet = false;
+        }
+        public void ChangeTheme(Theme theme)
+        {
+            this.theme = theme;
+            codeBox.BackColor = theme.Background;
+            codeBox.ForeColor = theme.Text;
+            codeBox.Font = theme.Font;
         }
 
         private void paint(object sender,PaintEventArgs e)
@@ -45,8 +63,9 @@ namespace ProLernParser
         }
         private void codeBox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (!processHighlight && (e.KeyData == Keys.Space || e.KeyData == Keys.Tab || e.KeyData == Keys.Return || e.KeyData == Keys.Decimal))
-                highlight(getPriorLineBreak(codeBox.SelectionStart - 1), getNextLineBreak(codeBox.SelectionStart + codeBox.SelectionLength));
+            Console.WriteLine(e.KeyData);
+            if (!processHighlight && (e.KeyData == Keys.Space || e.KeyData == Keys.Return || e.KeyData == (Keys.Return | Keys.Shift) || e.KeyData == Keys.Decimal || e.KeyData == (Keys.OemPeriod | Keys.Shift) || e.KeyData == (Keys.D7 | Keys.Shift)))
+                highlight();
         }
         private void Form_KeyDown(object sender, KeyEventArgs e)
         {
@@ -54,19 +73,63 @@ namespace ProLernParser
         }
         private void codeBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.Control && (e.KeyCode == Keys.Z))
 
+            if (!processHighlight && (e.KeyData == Keys.Return || e.KeyData == (Keys.Return | Keys.Shift)))
+                highlight();
+
+            
+            var box = (RichTextBox)sender;
+            /*
+            if (e.KeyCode == Keys.Tab)
             {
-
-                Console.WriteLine("UNDO: " + this.codeBox.UndoActionName);
-                while (this.codeBox.CanUndo && this.codeBox.UndoActionName.Equals("Unknown"))
-
+                e.IsInputKey = false;
+                int pos = box.SelectionStart;
+                int breakCount = box.SelectedText.Split('\n').Length-1;
+                if (breakCount > 0)
                 {
-
-                    this.codeBox.Undo();
-
+                    box.SuspendLayout();
+                    box.Enabled = false;
+                    int start = getPriorLineBreak(box.SelectionStart-1);
+                    int end = getNextLineBreak(box.SelectionStart + box.SelectionLength);
+                    int backupS = box.SelectionStart;
+                    int backupL = box.SelectionLength;
+                    box.SelectionStart = start;
+                    box.SelectionStart = getPriorLineBreak(box.SelectionStart);
+                    box.SelectedText = box.SelectedText.Replace("\n","\n  ");
+                    Console.WriteLine(box.UndoActionName);
+                    box.SelectionStart = backupS;
+                    highlight(start, end);
+                    Console.WriteLine(box.UndoActionName);
+                    box.Select(backupS, backupL+ breakCount * 2);
+                    box.Enabled = true;
+                    box.ResumeLayout();
+                    box.Focus();
                 }
-
+                else
+                {
+                    if (e.Shift)
+                    {
+                        box.Text = box.Text.Remove(pos, 2);
+                        box.SelectionStart = pos - 2;
+                        Console.WriteLine(pos);
+                        //highlight();
+                    }
+                    else
+                    {
+                        Console.WriteLine(pos);
+                        box.SelectedText = "  ";
+                        box.SelectionStart = pos + 2;
+                        //highlight();
+                    }
+                }
+            }
+            */
+            if (e.Control && (e.KeyCode == Keys.Z))
+            {
+                while (box.CanUndo && box.UndoActionName.Equals("Unknown"))
+                {
+                    box.Undo();
+                }
             }
 
             /*
@@ -126,47 +189,52 @@ namespace ProLernParser
             }
             */
         }
+        private void highlight()
+        {
+            highlight(getPriorLineBreak(codeBox.SelectionStart - 1), getNextLineBreak(codeBox.SelectionStart + codeBox.SelectionLength));
+        }
         private void highlight(int start, int end)
         {
+            //Color text = Color.Gray,calc = Color.Aquamarine, command = Color.FromArgb(130, 180, 255), variable = Color.Violet, action = Color.FromArgb(255, 255, 128), comment = Color.LimeGreen;
+
             processHighlight = true;
             codeBox.SuspendLayout();
             codeBox.Enabled = false;
             int backupS = codeBox.SelectionStart;
             int backupL = codeBox.SelectionLength;
             codeBox.Select(start, end - start);
-            codeBox.SelectionColor = Color.LightGray;
-            codeBox.SelectionFont = new Font("consolas", 10);
+            codeBox.SelectionColor = theme.Text;
+            codeBox.SelectionFont = theme.Font;
 
-            Color command = Color.SkyBlue, variable = Color.Violet, other = Color.FromArgb(255, 255, 128), comment = Color.LightGreen;
-            highlight("START", command, start, end);
-            highlight("STOPP", command, start, end);
-            highlight("AUSGABE", other, start, end);
-            highlight("ENDE", command, start, end);
-            highlight("RECHNEN", other, start, end);
-            highlight("ZAHL", variable, start, end);
-            highlight("WORT", variable, start, end);
-            highlight("ZAHLEINGABE", other, start, end);
-            highlight("WORTEINGABE", other, start, end);
-            highlight("ZAHLFELD", variable, start, end);
-            highlight("WORTFELD", variable, start, end);
-            highlight("FALLS", command, start, end);
-            highlight("SONST", command, start, end);
-            highlight("SOLANGE", command, start, end);
-            highlight("WIEDERHOLE", command, start, end);
-            highlight("UNTERPROGRAMM", command, start, end);
-            highlight("FUNKTION", command, start, end);
-            highlight("RUECKGABE", command, start, end);
-            highlight("FARBE", other, start, end);
-            highlight("BEMERKUNG:", comment, start, end);
-            highlight("BILDSCHIRMLOESCHEN", other, start, end);
-            highlight("SCHREIBEN-OEFFNEN", other, start, end);
-            highlight("LESEN-OEFFNEN", other, start, end);
+            highlight("START", theme.Flow, start, end);
+            highlight("STOPP", theme.Flow, start, end);
+            highlight("AUSGABE", theme.Action, start, end);
+            highlight("AUSGABEREIHE", theme.Action, start, end);
+            highlight("ENDE", theme.Flow, start, end);
+            highlight("RECHNEN", theme.Calc, start, end);
+            highlight("ZAHL", theme.Type, start, end);
+            highlight("WORT", theme.Type, start, end);
+            highlight("ZAHLEINGABE", theme.Action, start, end);
+            highlight("WORTEINGABE", theme.Action, start, end);
+            highlight("ZAHLFELD", theme.Type, start, end);
+            highlight("WORTFELD", theme.Type, start, end);
+            highlight("FALLS", theme.Flow, start, end);
+            highlight("SONST", theme.Flow, start, end);
+            highlight("SOLANGE", theme.Flow, start, end);
+            highlight("WIEDERHOLE", theme.Flow, start, end);
+            highlight("UNTERPROGRAMM", theme.Flow, start, end);
+            highlight("FUNKTION", theme.Flow, start, end);
+            highlight("RUECKGABE", theme.Flow, start, end);
+            highlight("FARBE", theme.Action, start, end);
+            highlight("BILDSCHIRMLOESCHEN", theme.Action, start, end);
+            highlight("SCHREIBEN-OEFFNEN", theme.Action, start, end);
+            highlight("LESEN-OEFFNEN", theme.Action, start, end);
+            highlight("VERSUCH", theme.Flow, start, end);
+            highlight("FEHLER", theme.Flow, start, end);
 
-            highlight("VERSUCH", command, start, end);
-            highlight("FEHLER", command, start, end);
-
-            codeBox.SelectionStart = backupS;
-            codeBox.SelectionLength = backupL;
+            highlightComment("BEMERKUNG:", theme.Comment, start, end);
+            highlightComment("//", theme.Comment, start, end);
+            codeBox.Select(backupS, backupL);
             codeBox.Enabled = true;
             codeBox.ResumeLayout();
             codeBox.Focus();
@@ -174,16 +242,32 @@ namespace ProLernParser
         }
         private void highlight(string element, Color color, int index, int endIndex)
         {
+            if (index > endIndex) return;
             int elementStart = codeBox.Text.IndexOf(element, index, endIndex-index);
             if (elementStart != -1)
             {
                 int backIndex = elementStart + element.Length;
-                if (backIndex < codeBox.Text.Length && (codeBox.Text[backIndex] == ' ' || codeBox.Text[backIndex] == '\n' || codeBox.Text[backIndex] == '\t'))
+                if (backIndex < codeBox.Text.Length && (codeBox.Text[backIndex] == ' ' || codeBox.Text[backIndex] == '\n' || codeBox.Text[backIndex] == '\t' || codeBox.Text[backIndex] == '('))
                 {
                     codeBox.Select(elementStart, element.Length);
                     codeBox.SelectionColor = color;
                 }
                 highlight(element, color, elementStart + element.Length, endIndex);
+            }
+        }
+        private void highlightComment(string element, Color color, int index, int endIndex)
+        {
+            if (index > endIndex) return;
+            int elementStart = codeBox.Text.IndexOf(element, index, endIndex - index);
+            if (elementStart != -1)
+            {
+                int backIndex = elementStart + element.Length;
+                if (backIndex < codeBox.Text.Length)
+                {
+                    codeBox.Select(elementStart, getNextLineBreak(elementStart)- elementStart);
+                    codeBox.SelectionColor = color;
+                }
+                highlightComment(element, color, elementStart + element.Length, endIndex);
             }
         }
         private int getPriorLineBreak(int index)
@@ -248,10 +332,10 @@ namespace ProLernParser
                     try
                     {
                         codePath = filePath;
-                        if (Path.GetExtension(codePath)==".rtf")
+                        if (Path.GetExtension(codePath) == ".rtf")
                             codeBox.LoadFile(codePath, RichTextBoxStreamType.RichText);
                         else
-                            codeBox.LoadFile(codePath, RichTextBoxStreamType.UnicodePlainText);
+                            codeBox.Text = File.ReadAllText(codePath, Encoding.UTF8);
                         highlight(0, codeBox.Text.Length);
                     }
                     catch (Exception ex)
@@ -269,7 +353,7 @@ namespace ProLernParser
                 if (Path.GetExtension(codePath) == ".rtf")
                     codeBox.SaveFile(codePath, RichTextBoxStreamType.RichText);
                 else
-                    codeBox.SaveFile(codePath, RichTextBoxStreamType.UnicodePlainText);
+                    File.WriteAllText(codePath, codeBox.Text, Encoding.UTF8);
             }
             catch (Exception ex)
             {
@@ -293,7 +377,7 @@ namespace ProLernParser
                         if (Path.GetExtension(codePath) == ".rtf")
                             codeBox.SaveFile(codePath, RichTextBoxStreamType.RichText);
                         else
-                            codeBox.SaveFile(codePath, RichTextBoxStreamType.UnicodePlainText);
+                            File.WriteAllText(codePath, codeBox.Text, Encoding.UTF8);
                     }
                     catch (Exception ex)
                     {
@@ -301,6 +385,16 @@ namespace ProLernParser
                     }
                 }
             }
+        }
+
+        private void codeBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            //highlight();
+        }
+
+        private void codeBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            highlight();
         }
     }
 }
