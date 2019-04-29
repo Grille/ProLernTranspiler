@@ -14,13 +14,13 @@ using System.Diagnostics;
 
 namespace ProLernParser
 {
-    static class Program
+     class Program
     {
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>     
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-us");
             Application.EnableVisualStyles();

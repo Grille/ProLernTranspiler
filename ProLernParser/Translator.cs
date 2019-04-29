@@ -14,24 +14,14 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace ProLernParser
-{
-    public enum Command
-    {
-        Start,Stop,End,Out,Calc,Number,Text,If
-    }      
+{   
     public class Translator
     {
-        public SortedList<string, string> Commands;
-        public Translator()
-        {
-            //Commands.Add("Start","Stop");
-            Commands = new SortedList<string, string>();
-        }
         public string Parse(string code)
         {
             string head = "using _S=System;using _SI=System.IO;\r\nusing _SWF=System.Windows.Forms;using _SD=System.Drawing;\r\n";
             head += "namespace ProLernProgram{\r\npublic class Program{\r\n";
-            head += "static public void Main(){new Program().Run();}";
+            head += "static public void Main(){new Program().START();}";
             head += "public _SI.StreamWriter _writer;\r\n";
             head += "public _SI.StringReader _reader;\r\n";
             head += "public double ZUFALLSZAHL(double max){var rnd = new _S.Random();return rnd.Next((int)1,(int)max);}\r\n";
@@ -39,7 +29,6 @@ namespace ProLernParser
             string end = "}}";
             string body = "";
             ref string traget = ref body;
-            string consoleColor = "Console.ForegroundColor = ConsoleColor.";
             string[] lines = code.Split('\n');
             for (int i = 0; i < lines.Length; i++)
             {
@@ -47,7 +36,7 @@ namespace ProLernParser
                 ref string line = ref lines[i];
                 string newLine;
                 
-                if /**/ (parse(line, out newLine, "START", "public void Run(){\r\ntry{")) { castArray = false; }
+                if /**/ (parse(line, out newLine, "START", "public void START(){\r\ntry{")) { castArray = false; }
                 else if (parse(line, out newLine, "STOPP", "}catch{_S.Console.WriteLine(\"Fehler.\");_S.Console.ReadKey();}_S.Console.WriteLine(\"Bitte eine Taste druecken, um das Programm zu beenden.\");_S.Console.ReadKey();}")) ;
                 else if (parse(line, out newLine, "ENDE", "}")) ;
                 else if (parse(line, out newLine, "AUSGABE", "_S.Console.WriteLine(<#>);")) ;
@@ -57,6 +46,7 @@ namespace ProLernParser
                 else if (parse(line, out newLine, "WORT", "string <#>;")) ;
                 else if (parse(line, out newLine, "ZAHLEINGABE", "<#>=double.Parse(_S.Console.ReadLine());")) ;
                 else if (parse(line, out newLine, "WORTEINGABE", "<#>=_S.Console.ReadLine();")) ;
+                else if (parse(line, out newLine, "EINGABE", "_S.Console.ReadKey();")) ;
                 else if (parse(line, out newLine, "ZAHLFELD", "double[] <#>;", (input) => input.Replace("[", "=new double[(int)"))) { castArray = false; }
                 else if (parse(line, out newLine, "WORTFELD", "string[] <#>;", (input) => input.Replace("[", "=new string[(int)"))) { castArray = false; }
                 else if (parse(line, out newLine, "FALLS", "if(<#>){", (input) => Regex.Replace(input, "[^!><=]=", "==").Replace("UND", "&&").Replace("ODER", "||"))) ;

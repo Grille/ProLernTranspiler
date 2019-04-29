@@ -20,7 +20,6 @@ namespace ProLernParser
         Button Button = new Button() { };
         bool processHighlight = true;
         string codePath = "";
-        Encoding encoding;
         Theme theme;
         public CodeForm()
         {
@@ -28,8 +27,9 @@ namespace ProLernParser
             ChangeTheme(new Theme()
             {
                 Background = Color.FromArgb(45, 60, 65), Text = Color.LightGray,
-                Calc = Color.Aquamarine, Flow = Color.SkyBlue, Type = Color.Violet, Action = Color.FromArgb(255, 255, 128), Comment = Color.LimeGreen
+                Calc = Color.Aquamarine, Flow = Color.SkyBlue, Type = Color.Violet, Action = Color.FromArgb(255, 255, 128), Comment = Color.LimeGreen, String = Color.FromArgb(255, 128, 128)
             });
+
             codeBox.MaxLength = 100000;
             codeBoxCs.MaxLength = 100000;
             performer = new Performer();
@@ -63,8 +63,7 @@ namespace ProLernParser
         }
         private void codeBox_KeyUp(object sender, KeyEventArgs e)
         {
-            Console.WriteLine(e.KeyData);
-            if (!processHighlight && (e.KeyData == Keys.Space || e.KeyData == Keys.Return || e.KeyData == (Keys.Return | Keys.Shift) || e.KeyData == Keys.Decimal || e.KeyData == (Keys.OemPeriod | Keys.Shift) || e.KeyData == (Keys.D7 | Keys.Shift)))
+            if (!processHighlight && (e.KeyData == Keys.Space || e.KeyData == Keys.Return || e.KeyData == (Keys.Return | Keys.Shift) || e.KeyData == Keys.Decimal || e.KeyData == (Keys.OemPeriod | Keys.Shift) || e.KeyData == (Keys.D7 | Keys.Shift)|| e.KeyData == (Keys.D2 | Keys.Shift)))
                 highlight();
         }
         private void Form_KeyDown(object sender, KeyEventArgs e)
@@ -191,7 +190,7 @@ namespace ProLernParser
         }
         private void highlight()
         {
-            highlight(getPriorLineBreak(codeBox.SelectionStart - 1), getNextLineBreak(codeBox.SelectionStart + codeBox.SelectionLength));
+            highlight(getPriorChar(codeBox.SelectionStart - 1, '\n'), getNextChar(codeBox.SelectionStart + codeBox.SelectionLength, '\n'));
         }
         private void highlight(int start, int end)
         {
@@ -216,6 +215,7 @@ namespace ProLernParser
             highlight("WORT", theme.Type, start, end);
             highlight("ZAHLEINGABE", theme.Action, start, end);
             highlight("WORTEINGABE", theme.Action, start, end);
+            highlight("EINGABE", theme.Action, start, end);
             highlight("ZAHLFELD", theme.Type, start, end);
             highlight("WORTFELD", theme.Type, start, end);
             highlight("FALLS", theme.Flow, start, end);
@@ -232,8 +232,12 @@ namespace ProLernParser
             highlight("VERSUCH", theme.Flow, start, end);
             highlight("FEHLER", theme.Flow, start, end);
 
+            highlight("ZUFALLSZAHL", theme.Action, start, end);
+            highlight("WORTINZAHL", theme.Action, start, end);
+
             highlightComment("BEMERKUNG:", theme.Comment, start, end);
             highlightComment("//", theme.Comment, start, end);
+            highlightString("\"",theme.String,start, end);
             codeBox.Select(backupS, backupL);
             codeBox.Enabled = true;
             codeBox.ResumeLayout();
@@ -264,27 +268,53 @@ namespace ProLernParser
                 int backIndex = elementStart + element.Length;
                 if (backIndex < codeBox.Text.Length)
                 {
-                    codeBox.Select(elementStart, getNextLineBreak(elementStart)- elementStart);
+                    codeBox.Select(elementStart, getNextChar(elementStart,'\n')- elementStart);
                     codeBox.SelectionColor = color;
                 }
                 highlightComment(element, color, elementStart + element.Length, endIndex);
             }
         }
-        private int getPriorLineBreak(int index)
+        private void highlightString(string element, Color color, int index, int endIndex)
+        {
+            int startPos = 0;
+            bool enable = false;
+            for (int i = index; i < endIndex; i++)
+            {
+                if (enable)
+                {
+                    if (codeBox.Text[i] == '"')
+                    {
+                        enable = false;
+                        codeBox.Select(startPos, i-startPos+1);
+                        codeBox.SelectionColor = color;
+                    }
+                }
+                else
+                {
+                    if (codeBox.Text[i] == '"')
+                    {
+                        startPos = i;
+                        enable = true;
+                    }
+                }
+            }
+        }
+        private int getPriorChar(int index,char ch)
         {
             while (index >= 0)
             {
-                if (codeBox.Text[index] == '\n')
+                if (codeBox.Text[index] == ch)
                     return index;
                 index--;
             }
             return 0;
         }
-        private int getNextLineBreak(int index)
+        private int getNextChar(int index,char ch)
         {
             while (index < codeBox.Text.Length)
             {
-                if (codeBox.Text[index] == '\n')
+
+                if (codeBox.Text[index] == ch)
                     return index;
                 index++;
             }

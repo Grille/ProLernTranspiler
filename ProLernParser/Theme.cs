@@ -11,7 +11,7 @@ namespace ProLernParser
     {
         public Font Font;
         public Color Background;
-        public Color Text,Flow,Type,Action,Calc, Comment;
+        public Color Text,Flow,Type,Action,Calc, Comment, String;
         public Theme()
         {
             Font = new Font("consolas", 9.75f);
@@ -19,6 +19,7 @@ namespace ProLernParser
             Text = Color.Black;
             Flow = Type = Action = Calc = Color.Blue;
             Comment = Color.Green;
+            String = Color.DarkRed;
         }
     }
 }
