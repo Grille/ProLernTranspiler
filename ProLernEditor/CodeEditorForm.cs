@@ -10,10 +10,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ProLernParser;
 
-namespace ProLernParser
+namespace ProLernEditor
 {
-    public partial class CodeForm : System.Windows.Forms.Form
+    public partial class CodeEditorForm : System.Windows.Forms.Form
     {
         Translator translator;
         Performer performer;
@@ -21,7 +22,7 @@ namespace ProLernParser
         bool processHighlight = true;
         string codePath = "";
         Theme theme;
-        public CodeForm()
+        public CodeEditorForm()
         {
             InitializeComponent();
             ChangeTheme(new Theme()

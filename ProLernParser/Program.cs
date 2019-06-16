@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace ProLernParser
 {
-     class Program
+    class Program
     {
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
@@ -23,9 +23,9 @@ namespace ProLernParser
         public static void Main()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-us");
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CodeForm());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new CodeForm());
         }
     }
 }
