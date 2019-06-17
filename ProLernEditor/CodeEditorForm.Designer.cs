@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeEditorForm));
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.codeBox = new System.Windows.Forms.RichTextBox();
-            this.codeBoxCs = new System.Windows.Forms.RichTextBox();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.neuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.öffnenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,76 +46,8 @@
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.befehlslisteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.BackColor = System.Drawing.Color.Transparent;
-            this.splitContainer1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.codeBox);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.codeBoxCs);
-            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
-            this.splitContainer1.Size = new System.Drawing.Size(788, 551);
-            this.splitContainer1.SplitterDistance = 460;
-            this.splitContainer1.TabIndex = 2;
-            this.splitContainer1.TabStop = false;
-            // 
-            // codeBox
-            // 
-            this.codeBox.AcceptsTab = true;
-            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.codeBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(60)))), ((int)(((byte)(65)))));
-            this.codeBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.codeBox.DetectUrls = false;
-            this.codeBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.codeBox.Location = new System.Drawing.Point(3, 3);
-            this.codeBox.Name = "codeBox";
-            this.codeBox.Size = new System.Drawing.Size(454, 545);
-            this.codeBox.TabIndex = 2;
-            this.codeBox.TabStop = false;
-            this.codeBox.Text = "START\nAUSGABE \"Hallo Welt\"\nSTOPP\n\n";
-            this.codeBox.WordWrap = false;
-            this.codeBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.codeBox_MouseClick);
-            this.codeBox.TextChanged += new System.EventHandler(this.richTextBoxCode_TextChanged);
-            this.codeBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.codeBox_KeyUp);
-            this.codeBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.codeBox_MouseDown);
-            this.codeBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.codeBox_PreviewKeyDown);
-            // 
-            // codeBoxCs
-            // 
-            this.codeBoxCs.AcceptsTab = true;
-            this.codeBoxCs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.codeBoxCs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
-            this.codeBoxCs.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.codeBoxCs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.codeBoxCs.Location = new System.Drawing.Point(3, 3);
-            this.codeBoxCs.Name = "codeBoxCs";
-            this.codeBoxCs.Size = new System.Drawing.Size(318, 545);
-            this.codeBoxCs.TabIndex = 3;
-            this.codeBoxCs.TabStop = false;
-            this.codeBoxCs.Text = "";
-            this.codeBoxCs.WordWrap = false;
             // 
             // dateiToolStripMenuItem
             // 
@@ -166,7 +95,7 @@
             // speichernUnterToolStripMenuItem
             // 
             this.speichernUnterToolStripMenuItem.Name = "speichernUnterToolStripMenuItem";
-            this.speichernUnterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+            this.speichernUnterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.S)));
             this.speichernUnterToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.speichernUnterToolStripMenuItem.Text = "Speichern Unter";
@@ -183,7 +112,7 @@
             this.toolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
             this.toolStripMenuItem1.Size = new System.Drawing.Size(223, 22);
             this.toolStripMenuItem1.Text = "Beenden";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click_1);
             // 
             // menuStrip1
             // 
@@ -214,6 +143,7 @@
             this.erstellenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
             this.erstellenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.erstellenToolStripMenuItem.Text = "Erstellen";
+            this.erstellenToolStripMenuItem.Click += new System.EventHandler(this.erstellenToolStripMenuItem_Click);
             // 
             // startenToolStripMenuItem
             // 
@@ -248,33 +178,26 @@
             // optionenToolStripMenuItem
             // 
             this.optionenToolStripMenuItem.Name = "optionenToolStripMenuItem";
-            this.optionenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionenToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.optionenToolStripMenuItem.Text = "Optionen";
             // 
             // befehlslisteToolStripMenuItem
             // 
             this.befehlslisteToolStripMenuItem.Name = "befehlslisteToolStripMenuItem";
-            this.befehlslisteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.befehlslisteToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.befehlslisteToolStripMenuItem.Text = "Befehlsliste";
             // 
-            // CodeForm
+            // CodeEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(788, 574);
-            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "CodeForm";
+            this.Name = "CodeEditorForm";
             this.Text = "ProLern#";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CodeForm_FormClosed);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_KeyDown);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -283,9 +206,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.RichTextBox codeBox;
-        private System.Windows.Forms.RichTextBox codeBoxCs;
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem neuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem öffnenToolStripMenuItem;

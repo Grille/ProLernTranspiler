@@ -21,6 +21,7 @@ namespace ProLernParser
         [SecurityPermissionAttribute(SecurityAction.Demand, ControlThread = true)]
         public bool Compile(string cscode, string dst)
         {
+            cscode = cscode.Replace("\r\n", "\n");
             Kill();
             using (var codeProvider = new CSharpCodeProvider())
             {
@@ -38,6 +39,7 @@ namespace ProLernParser
                 parameter.OutputAssembly = dst;
                 var result = compiler.CompileAssemblyFromSource(parameter, cscode);
                 Errors = result.Errors;
+
                 if (result.Errors.Count > 0)
                 {
                     //MessageBox.Show("LINE: " + result.Errors[0].Line + "\nID: " + result.Errors[0].ErrorNumber + "\nERROR: " + result.Errors[0].ErrorText, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

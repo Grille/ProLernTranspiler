@@ -25,7 +25,7 @@ namespace ProLernParser
             head += "public _SI.StreamWriter _writer;\r\n";
             head += "public _SI.StringReader _reader;\r\n";
             head += "public double ZUFALLSZAHL(double max){var rnd = new _S.Random();return rnd.Next((int)1,(int)max);}\r\n";
-            head += "public double WORTINZAHL(string str){return double.Parse(str);}\r\n";
+            head += "public double WORTINZAHL(string str){return double.Parse(str);}\r\n\n";
             string end = "}}";
             string body = "";
             ref string traget = ref body;
@@ -36,7 +36,7 @@ namespace ProLernParser
                 ref string line = ref lines[i];
                 string newLine;
                 
-                if /**/ (parse(line, out newLine, "START", "public void START(){\r\ntry{")) { castArray = false; }
+                if /**/ (parse(line, out newLine, "START", "public void START(<#>){try{")) { castArray = false; }
                 else if (parse(line, out newLine, "STOPP", "}catch{_S.Console.WriteLine(\"Fehler.\");_S.Console.ReadKey();}_S.Console.WriteLine(\"Bitte eine Taste druecken, um das Programm zu beenden.\");_S.Console.ReadKey();}")) ;
                 else if (parse(line, out newLine, "ENDE", "}")) ;
                 else if (parse(line, out newLine, "AUSGABE", "_S.Console.WriteLine(<#>);")) ;
