@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing;
 using System.Windows.Forms;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
@@ -17,16 +18,12 @@ namespace ProLernParser
 {   
     public class Translator
     {
+        public Translator()
+        {
+
+        }
         public string Parse(string code)
         {
-            string head = "using _S=System;using _SI=System.IO;\r\nusing _SWF=System.Windows.Forms;using _SD=System.Drawing;\r\n";
-            head += "namespace ProLernProgram{\r\npublic class Program{\r\n";
-            head += "static public void Main(){new Program().START();}";
-            head += "public _SI.StreamWriter _writer;\r\n";
-            head += "public _SI.StringReader _reader;\r\n";
-            head += "public double ZUFALLSZAHL(double max){var rnd = new _S.Random();return rnd.Next((int)1,(int)max);}\r\n";
-            head += "public double WORTINZAHL(string str){return double.Parse(str);}\r\n\n";
-            string end = "}}";
             string body = "";
             ref string traget = ref body;
             string[] lines = code.Split('\n');
@@ -34,9 +31,9 @@ namespace ProLernParser
             {
                 bool castArray = true;
                 ref string line = ref lines[i];
-                string newLine;
-                
-                if /**/ (parse(line, out newLine, "START", "public void START(<#>){try{")) { castArray = false; }
+                string newLine = "";
+
+                if  (parse(line, out newLine, "START", "public void START(){try{")) { castArray = false; }
                 else if (parse(line, out newLine, "STOPP", "}catch{_S.Console.WriteLine(\"Fehler.\");_S.Console.ReadKey();}_S.Console.WriteLine(\"Bitte eine Taste druecken, um das Programm zu beenden.\");_S.Console.ReadKey();}")) ;
                 else if (parse(line, out newLine, "ENDE", "}")) ;
                 else if (parse(line, out newLine, "AUSGABE", "_S.Console.WriteLine(<#>);")) ;
@@ -59,6 +56,7 @@ namespace ProLernParser
                 else if (parseColor(line, out newLine, "FARBE", "_S.Console.ForegroundColor = _S.ConsoleColor.<color>;")) ;
                 else if (parse(line, out newLine, "BEMERKUNG:", "//<#>")) ;
                 else if (parse(line, out newLine, "BILDSCHIRMLOESCHEN", "_S.Console.Clear();")) ;
+
                 else if (parse(line, out newLine, "SCHREIBEN-OEFFNEN", "_writer = new _SI.StreamWriter(<#>);")) ;
                 else if (parse(line, out newLine, "LESEN-OEFFNEN", "_reader = new _SI.StreamReader(<#>);")) ;
                 else if (parse(line, out newLine, "ZAHL-LESEN", "<#>=double.Parse(_reader.ReadLine());")) ;
@@ -67,16 +65,29 @@ namespace ProLernParser
                 else if (parse(line, out newLine, "ZAHL-SCHREIBEN", "_writer.WriteLine(<#>);")) ;
                 else if (parse(line, out newLine, "SCHREIBEN-SCHLIESSEN", "_writer.Close();")) ;
                 else if (parse(line, out newLine, "LESEN-SCHLIESSEN", "_reader.Close();")) ;
-                else if (parse(line, out newLine, "FENSTER", "public class ProLernForm : _SWF.Form{")) ;
-                else if (parse(line, out newLine, "FENSTERKONSTRUKTOR", "public ProLernForm(){")) ;
-                else if (parse(line, out newLine, "OEFFNEFENSTER", "_SWF.Application.Run(new ProLernForm());")) ;
+                
+                else if (parse(line, out newLine, "FENSTER", "public class _proLernForm : _proLernFormProto{")) ;
+                else if (parse(line, out newLine, "FENSTERKONSTRUKTOR", "public _proLernForm(){")) ;
+                else if (parse(line, out newLine, "OEFFNEFENSTER", "_SWF.Application.Run(new _proLernForm());")) ;
                 else if (parseFunction(line, out newLine, "FENSTERGROESSE", "base.Width=(int)<arg0>;base.Height=(int)<arg1>;")) ;
-                else if (parseFunction(line, out newLine, "KNOPF", "_SWF.TextBox <#> = new _SWF.TextBox(){Left = (int)<arg0>,Top = (int)<arg1>,Width = (int)<arg2>,Height = (int)<arg3>,Text=<arg4>,Font = new System.Drawing.Font(<arg5>, (float)<arg6>),Click+=<arg7>};")) ;
-                else if (parseFunction(line, out newLine, "WORTBOX", "_SWF.TextBox <#> = new _SWF.TextBox(){Left = (int)<arg0>,Top = (int)<arg1>,Width = (int)<arg2>,Height = (int)<arg3>,Font = new System.Drawing.Font(<arg4>, (float)<arg5>)};")) ;
-                else if (parse(line, out newLine, "KNOPFKLICK ", "public void <#>(object _sender, EventArgs _e){")) ;
+                else if (parseFunction(line, out newLine, "KNOPF", "public _button <#> = new _button(){Left = (int)<arg0>,Top = (int)<arg1>,Width = (int)<arg2>,Height = (int)<arg3>,Text=<arg4>,Font = new System.Drawing.Font(<arg5>, (float)<arg6>),clickname=\"<arg7>\"};")) ;
+                else if (parseFunction(line, out newLine, "WORTBOX", "public _SWF.TextBox <#> = new _SWF.TextBox(){Left = (int)<arg0>,Top = (int)<arg1>,Width = (int)<arg2>,Height = (int)<arg3>,Font = new System.Drawing.Font(<arg4>, (float)<arg5>)};")) ;
+                else if (parse(line, out newLine, "KNOPFKLICK", "public void <#>(object _sender, _S.EventArgs _e){")) ;
                 else if (parse(line, out newLine, "FENSTERLOESCHEN", "base.Refresh();")) ;
-                else if (parse(line, out newLine, "FENSTERNEUZEICHNEN", "protected override void OnPaint(_SWF.PaintEventArgs _e){base.OnPaint(_e);")) ;
+                else if (parse(line, out newLine, "FENSTERNEUZEICHNEN", "protected override void OnPaint(_SWF.PaintEventArgs _e){base.OnPaint(_e);_g = _e.Graphics;")) ;
+                else if (parseFunction(line, out newLine, "MAUSKLICK", "protected override void OnMouseClick(_SWF.MouseEventArgs _e){base.OnMouseClick(_e);double <arg0> = _e.X,<arg1> = _e.Y;")) ;
                 else if (parseColor(line, out newLine, "FENSTERFARBE", "base.BackColor = _SD.Color.<color>;")) ;
+                else if (parseColor(line, out newLine, "PINSEL", "_pinsel = new _SD.SolidBrush(_SD.Color.<color>);")) ;
+                else if (parseFunction(line, out newLine, "STIFT", "_stift = new _SD.Pen(_SD.Color.<arg0/color>,(float)<arg1>);")) ;
+
+                else if (parseFunction(line, out newLine, "RECHTECKFUELLEN", "_g.FillRectangle(_pinsel, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
+                else if (parseFunction(line, out newLine, "ELLIPSEFUELLEN", "_g.FillEllipse(_pinsel, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
+                else if (parseFunction(line, out newLine, "RECHTECK", "_g.DrawRectangle(_stift, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
+                else if (parseFunction(line, out newLine, "ELLIPSE", "_g.DrawEllipse(_stift, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
+                else if (parseFunction(line, out newLine, "ZEICHNEWORT", "_g.DrawString(<arg0>,new _SD.Font(<arg1>,(float)<arg2>),new _SD.SolidBrush(_SD.Color.<arg3/color>),new _SD.Point((int)<arg4>,(int)<arg5>));")) ;
+                else if (parseFunction(line, out newLine, "LINIE", "_g.DrawLine(_stift,new _SD.Point((int)<arg0>,(int)<arg1>), new _SD.Point((int)<arg2>, (int)<arg3>));")) ;
+                else if (parseFunction(line, out newLine, "BILD", "_drawBitmap(<arg0>, <arg1>, <arg2>, <arg3>, <arg4>);")) ;
+
                 else if (parse(line, out newLine, "VERSUCH", "try{")) ;
                 else if (parse(line, out newLine, "FEHLER", "catch{")) ;
                 else
@@ -101,10 +112,17 @@ namespace ProLernParser
                 Height = 0,
                 Font = new System.Drawing.Font("", 3)
             };
+            
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "ProLernParser.environment.cs";
 
-            return head + body + end;
-
-
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            using (var reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd().Replace("///<include>code", body);
+                Console.WriteLine(result);
+                return result;
+            }
         }
 
 
@@ -127,7 +145,7 @@ namespace ProLernParser
                 string[] args = code.Split(',');
                 args[0] = args[0].Trim();
                 string name = null;
-                if (args[0].Contains(" "))
+                if (args[0].Contains(" ") && args[0][0] != '"')
                 {
                     string[] split = args[0].Split(' ');
                     name = split[0];
@@ -137,6 +155,7 @@ namespace ProLernParser
                 {
                     result = result.Replace("<#>", name);
                     result = result.Replace("<arg" + i + ">", args[i].Trim());
+                    result = result.Replace("<arg" + i + "/color>", getColor(args[i].Trim()));
                 }
                 result = result.Replace('\n', ' ');
                 return result + "\r\n";
@@ -147,23 +166,26 @@ namespace ProLernParser
             return parseFrame(line, out newLine, command, (string code) =>
             {
                 string plcolor = code.Trim();
-                string cscolor = plcolor;
-                switch (plcolor)
-                {
-                    case "ROT": cscolor = "Red"; break;
-                    case "GELB": cscolor = "Yellow"; break;
-                    case "GRUEN": cscolor = "Green"; break;
-                    case "BLAU": cscolor = "Blue"; break;
-                    case "LILA": cscolor = "Magenta"; break;
-                    case "TUERKIS": cscolor = "Cyan"; break;
-                    case "WEISS": cscolor = "White"; break;
-                    case "SCHWARTZ": cscolor = "Black"; break;
-                    case "NORMAL": case "GRAU": cscolor = "Gray"; break;
-                }
+                string cscolor = getColor(plcolor);
                 result = result.Replace("<color>", cscolor);
                 result = result.Replace('\n', ' ');
                 return result + "\r\n";
             });
+        }
+        string getColor(string input)
+        {
+            switch (input)
+            {
+                case "ROT": return "Red";
+                case "GELB": return "Yellow";
+                case "GRUEN": return "Green";
+                case "BLAU": return "Blue";
+                case "LILA": return "Magenta";
+                case "TUERKIS": return "Cyan";
+                case "WEISS": return "White";
+                case "SCHWARTZ": return "Black";
+                default: return "Gray";
+            }
         }
         bool parseFrame(string line, out string newLine, string command, Func<string, string> function)
         {
@@ -172,6 +194,9 @@ namespace ProLernParser
                 string[] split = line.Split(new string[] { command }, 2, StringSplitOptions.None);
                 if (split[0].Trim() == "" && (split[1].Trim().Length == 0 || split[1][0] == ' ' || split[1][0] == '('))
                 {
+                    split[1] = split[1].Trim(new[] { ' ','\t'});
+                    //split[1] = split[1].TrimStart(new[] { '(' });
+                    //split[1] = split[1].TrimEnd(new[] { ')' });
                     newLine = function(split[1]);
                     return true;
                 }
@@ -180,4 +205,5 @@ namespace ProLernParser
             return false;
         }
     }
+
 }

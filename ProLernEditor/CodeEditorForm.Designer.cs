@@ -141,7 +141,7 @@
             // 
             this.erstellenToolStripMenuItem.Name = "erstellenToolStripMenuItem";
             this.erstellenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.erstellenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.erstellenToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.erstellenToolStripMenuItem.Text = "Erstellen";
             this.erstellenToolStripMenuItem.Click += new System.EventHandler(this.erstellenToolStripMenuItem_Click);
             // 
@@ -149,20 +149,20 @@
             // 
             this.startenToolStripMenuItem.Name = "startenToolStripMenuItem";
             this.startenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.startenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startenToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.startenToolStripMenuItem.Text = "Starten";
             this.startenToolStripMenuItem.Click += new System.EventHandler(this.startenToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(145, 6);
             // 
             // eigenschatenToolStripMenuItem
             // 
             this.eigenschatenToolStripMenuItem.Enabled = false;
             this.eigenschatenToolStripMenuItem.Name = "eigenschatenToolStripMenuItem";
-            this.eigenschatenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.eigenschatenToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.eigenschatenToolStripMenuItem.Text = "Eigenschaften";
             // 
             // extrasToolStripMenuItem
@@ -198,6 +198,7 @@
             this.KeyPreview = true;
             this.Name = "CodeEditorForm";
             this.Text = "ProLern#";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CodeEditorForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

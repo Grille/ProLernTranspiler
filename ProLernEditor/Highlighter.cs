@@ -32,17 +32,17 @@ namespace ProLernEditor
             control.TabWidth = 2;
             //control.IdleStyling = IdleStyling.AfterVisible;
 
-            control.CaretForeColor = Color.White;
+            control.CaretForeColor = theme.Crusor;
             control.Styles[Style.Default].BackColor = theme.Background;
             control.Styles[Style.Default].ForeColor = theme.Text;
             control.Styles[Style.Default].Font = "consolas";
             control.Styles[Style.Default].Size = 10;
             control.StyleClearAll();
 
-            control.SetSelectionBackColor(true,Color.FromArgb(45 / 4, 60 / 4, 65/2));
+            control.SetSelectionBackColor(true,theme.Selection);
 
-            control.Styles[Style.LineNumber].BackColor = Color.FromArgb(45/2, 60/2, 65/2);
-            control.Styles[Style.LineNumber].ForeColor = theme.Comment;
+            control.Styles[Style.LineNumber].BackColor = theme.LineBack;
+            control.Styles[Style.LineNumber].ForeColor = theme.LineFore;
 
             control.Styles[(int)Theme.Style.Action].ForeColor = theme.Action;
             control.Styles[(int)Theme.Style.Background].ForeColor = theme.Background;
@@ -75,6 +75,7 @@ namespace ProLernEditor
 
         public void Highlight()
         {
+            
             Highlight(0, control.Text.Length);
         }
         public void Highlight(object obj, StyleNeededEventArgs args)
@@ -120,9 +121,40 @@ namespace ProLernEditor
                 else if (highlightWord(ref code, ref index, "FUNKTION", Theme.Style.Flow)) ;
                 else if (highlightWord(ref code, ref index, "RUECKGABE", Theme.Style.Flow)) ;
                 else if (highlightWord(ref code, ref index, "FARBE", Theme.Style.Action)) ;
+
                 else if (highlightWord(ref code, ref index, "BILDSCHIRMLOESCHEN", Theme.Style.Action)) ;
                 else if (highlightWord(ref code, ref index, "SCHREIBEN-OEFFNEN", Theme.Style.Action)) ;
                 else if (highlightWord(ref code, ref index, "LESEN-OEFFNEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "ZAHL-LESEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "WORT-LESEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "WORT-SCHREIBEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "ZAHL-SCHREIBEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "SCHREIBEN-SCHLIESSEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "LESEN-SCHLIESSEN", Theme.Style.Action)) ;
+
+                else if (highlightWord(ref code, ref index, "FENSTER", Theme.Style.Flow)) ;
+                else if (highlightWord(ref code, ref index, "FENSTERKONSTRUKTOR", Theme.Style.Flow)) ;
+                else if (highlightWord(ref code, ref index, "FENSTERNEUZEICHNEN", Theme.Style.Flow)) ;
+                else if (highlightWord(ref code, ref index, "OEFFNEFENSTER", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "FENSTERFARBE", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "FENSTERGROESSE", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "FENSTERLOESCHEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "MAUSKLICK", Theme.Style.Flow)) ;
+
+                else if (highlightWord(ref code, ref index, "ZEICHNEWORT", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "RECHTECK", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "RECHTECKFUELLEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "ELLIPSE", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "ELLIPSEFUELLEN", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "LINIE", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "PINSEL", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "STIFT", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "BILD", Theme.Style.Action)) ;
+
+                else if (highlightWord(ref code, ref index, "KNOPF", Theme.Style.Type)) ;
+                else if (highlightWord(ref code, ref index, "WORTBOX", Theme.Style.Type)) ;
+                else if (highlightWord(ref code, ref index, "KNOPFKLICK", Theme.Style.Flow)) ;
+
                 else if (highlightWord(ref code, ref index, "VERSUCH", Theme.Style.Flow)) ;
                 else if (highlightWord(ref code, ref index, "FEHLER", Theme.Style.Flow)) ;
 

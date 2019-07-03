@@ -26,14 +26,26 @@ namespace ProLernEditor
         string codePath = "";
         Theme theme;
         CodeBox codeBox;
+        Button h = new Button();
         public CodeEditorForm()
         {
             InitializeComponent();
             ChangeTheme(new Theme()
             {
-                Background = Color.FromArgb(45, 60, 65), Text = Color.LightGray,
-                Calc = Color.Aquamarine, Flow = Color.SkyBlue, Type = Color.Violet, Action = Color.FromArgb(255, 255, 128), Comment = Color.LimeGreen,
-                Symbol = Color.FromArgb(128, 128, 211), Number = Color.FromArgb(128, 211, 128), String = Color.FromArgb(255, 156, 100)
+                Background = Color.FromArgb(45, 60, 65),
+                Text = Color.LightGray,
+                Calc = Color.Aquamarine,
+                Flow = Color.SkyBlue,
+                Type = Color.Violet,
+                Action = Color.FromArgb(255, 255, 128),
+                Comment = Color.LimeGreen,
+                Symbol = Color.LightGray,
+                Number = Color.LightGray,
+                String = Color.FromArgb(255, 156, 100),
+                LineBack = Color.FromArgb(45 / 2, 60 / 2, 65 / 2),
+                LineFore = Color.LimeGreen,
+                Crusor = Color.White,
+                Selection = Color.FromArgb(45 / 4, 60 / 4, 65 / 2),
             });
 
             codeBox = new CodeBox();
@@ -48,10 +60,6 @@ namespace ProLernEditor
             codeBox.AddText("START \n  AUSGABE \"Hallo Welt\"\nSTOPP ");
 
             performer = new Performer();
-            translator = new Translator();
-            //highlight(0, codeBox.Text.Length);
-            //codeBoxCs.Text = translator.Parse(scintilla.Text);
-            //Program.Evaluate(textBox1.Text);
             translator = new Translator();
             
         }
@@ -75,12 +83,13 @@ namespace ProLernEditor
             string cscode = translator.Parse(codeBox.Text);
             performer.Compile(cscode, "start.exe");
             int count = 0;
+            int max = performer.Errors.Count;
             foreach (CompilerError error in performer.Errors)
             {
                 MessageBox.Show(this,
-                    ((error.Line - 10) + 1) + ": " + error.ErrorText, "ERROR: " + error.ErrorNumber,
+                    ((error.Line - 10)) + ": " + error.ErrorText, "(" + (count + 1) + " / " + max + ") ERROR: " + error.ErrorNumber,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                if (count++ > 0) break;
+                if (count++ >= 10) break;
             }
         }
         private void startenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -90,12 +99,13 @@ namespace ProLernEditor
             if (performer.Errors.Count > 0)
             {
                 int count = 0;
+                int max = performer.Errors.Count;
                 foreach (CompilerError error in performer.Errors)
                 {
-                    MessageBox.Show(this, 
-                        ((error.Line - 10) + 1) + ": " + error.ErrorText, "ERROR: " + error.ErrorNumber, 
+                    MessageBox.Show(this,
+                        ((error.Line - 10)) + ": " + error.ErrorText, "(" + (count + 1) + "/" + max + ") ERROR: " + error.ErrorNumber,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    if (count++ > 0) break;
+                    if (count++ >= 10) break;
                 }
             }
             else
@@ -195,6 +205,11 @@ namespace ProLernEditor
         private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void CodeEditorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            performer.Kill();
         }
     }
 }

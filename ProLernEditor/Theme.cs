@@ -14,13 +14,16 @@ namespace ProLernEditor
             Background, Text, Flow, Type, Action, Calc, Comment, String, Symbol, Number
         }
         public Font Font;
-        public Color Background;
+        public Color Background, LineBack,LineFore,Selection,Crusor;
         public Color Text,Flow,Type,Action,Calc, Comment, String, Symbol,Number;
         public Theme()
         {
             Font = new Font("consolas", 9.75f);
             Background = Color.White;
-            Text = Number = Symbol = Color.Black;
+            Selection = Color.LightBlue;
+            LineBack = Color.WhiteSmoke;
+            LineFore = Color.DarkCyan;
+            Crusor = Text = Number = Symbol = Color.Black;
             Flow = Type = Action = Calc = Color.Blue;
             Comment = Color.Green;
             String = Color.DarkRed;

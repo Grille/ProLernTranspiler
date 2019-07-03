@@ -37,6 +37,7 @@ namespace ProLernParser
                 parameter.CompilerOptions = "/t:exe /unsafe";
                 parameter.GenerateExecutable = true;
                 parameter.OutputAssembly = dst;
+
                 var result = compiler.CompileAssemblyFromSource(parameter, cscode);
                 Errors = result.Errors;
 
