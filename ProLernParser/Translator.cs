@@ -65,7 +65,7 @@ namespace ProLernParser
                 else if (parse(line, out newLine, "ZAHL-SCHREIBEN", "_writer.WriteLine(<#>);")) ;
                 else if (parse(line, out newLine, "SCHREIBEN-SCHLIESSEN", "_writer.Close();")) ;
                 else if (parse(line, out newLine, "LESEN-SCHLIESSEN", "_reader.Close();")) ;
-                
+
                 else if (parse(line, out newLine, "FENSTER", "public class _proLernForm : _proLernFormProto{")) ;
                 else if (parse(line, out newLine, "FENSTERKONSTRUKTOR", "public _proLernForm(){")) ;
                 else if (parse(line, out newLine, "OEFFNEFENSTER", "_SWF.Application.Run(new _proLernForm());")) ;
@@ -74,7 +74,7 @@ namespace ProLernParser
                 else if (parseFunction(line, out newLine, "WORTBOX", "public _SWF.TextBox <#> = new _SWF.TextBox(){Left = (int)<arg0>,Top = (int)<arg1>,Width = (int)<arg2>,Height = (int)<arg3>,Font = new System.Drawing.Font(<arg4>, (float)<arg5>)};")) ;
                 else if (parse(line, out newLine, "KNOPFKLICK", "public void <#>(object _sender, _S.EventArgs _e){")) ;
                 else if (parse(line, out newLine, "FENSTERLOESCHEN", "base.Refresh();")) ;
-                else if (parse(line, out newLine, "FENSTERNEUZEICHNEN", "protected override void OnPaint(_SWF.PaintEventArgs _e){base.OnPaint(_e);_g = _e.Graphics;")) ;
+                else if (parse(line, out newLine, "FENSTERNEUZEICHNEN", "protected override void OnPaint(_SWF.PaintEventArgs _e){base.OnPaint(_e);this._g.Dispose(); var _g = _e.Graphics; this._g = this.CreateGraphics();")) ;
                 else if (parseFunction(line, out newLine, "MAUSKLICK", "protected override void OnMouseClick(_SWF.MouseEventArgs _e){base.OnMouseClick(_e);double <arg0> = _e.X,<arg1> = _e.Y;")) ;
                 else if (parseColor(line, out newLine, "FENSTERFARBE", "base.BackColor = _SD.Color.<color>;")) ;
                 else if (parseColor(line, out newLine, "PINSEL", "_pinsel = new _SD.SolidBrush(_SD.Color.<color>);")) ;
@@ -120,7 +120,6 @@ namespace ProLernParser
             using (var reader = new StreamReader(stream))
             {
                 string result = reader.ReadToEnd().Replace("///<include>code", body);
-                Console.WriteLine(result);
                 return result;
             }
         }
@@ -195,8 +194,11 @@ namespace ProLernParser
                 if (split[0].Trim() == "" && (split[1].Trim().Length == 0 || split[1][0] == ' ' || split[1][0] == '('))
                 {
                     split[1] = split[1].Trim(new[] { ' ','\t'});
-                    //split[1] = split[1].TrimStart(new[] { '(' });
-                    //split[1] = split[1].TrimEnd(new[] { ')' });
+                    if (split[1].Length > 1 && split[1][0] == '(' && split[1][split[1].Length - 1] == ')')
+                    {
+                        split[1] = split[1].TrimStart(new[] { '(' });
+                        split[1] = split[1].TrimEnd(new[] { ')' });
+                    }
                     newLine = function(split[1]);
                     return true;
                 }

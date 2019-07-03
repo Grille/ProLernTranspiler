@@ -27,7 +27,6 @@ namespace ProLernProgram
 
             foreach (var field in objFields)
             {
-                _S.Console.WriteLine(field.Name);
                 if (field.FieldType.IsSubclassOf(typeof(_SWF.Control)))
                 {
                     _SWF.Control control = (_SWF.Control)field.GetValue(this);
@@ -37,7 +36,6 @@ namespace ProLernProgram
                         {
                             var but = (_button)control;
                             var method = type.GetMethod(but.clickname);
-                            _S.Console.WriteLine(method.GetParameters()[1].ParameterType);
                             var onclick = (_S.Action<object, _S.EventArgs>)_S.Delegate.CreateDelegate(typeof(_S.Action<object, _S.EventArgs>), this, method);
                             but.Click += new _S.EventHandler(onclick);
                         }
@@ -53,7 +51,11 @@ namespace ProLernProgram
             else _bitmaps.Add(path, bitmap = new _SD.Bitmap(path));
             _g.DrawImage(bitmap, (int)x, (int)y, (int)width, (int)height);
         }
-
+        protected override void OnResize(_S.EventArgs e)
+        {
+            base.OnResize(e);
+            this.Refresh();
+        }
         public double ZUFALLSZAHL(double max)
         {
             var rnd = new _S.Random(); return rnd.Next((int)1, (int)max);
