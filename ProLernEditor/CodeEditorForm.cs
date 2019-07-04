@@ -47,7 +47,6 @@ namespace ProLernEditor
                 Crusor = Color.White,
                 Selection = Color.FromArgb(45 / 4, 60 / 4, 65 / 2),
             });
-
             codeBox = new CodeBox();
             Controls.Add(codeBox);
             new Highlighter(codeBox, theme);
@@ -72,7 +71,6 @@ namespace ProLernEditor
             //codeBox.Font = theme.Font;
             
         }
-
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {

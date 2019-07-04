@@ -105,7 +105,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="error.png" />
     <Content Include="fpl.ico" />
   </ItemGroup>
   <ItemGroup>

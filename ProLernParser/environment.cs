@@ -48,6 +48,7 @@ namespace ProLernProgram
                     }
                 }
             }
+            AutoSize = true;
         }
         public void _drawBitmap(_SD.Graphics _g, string path, double x, double y, double width, double height)
         {
@@ -65,10 +66,16 @@ namespace ProLernProgram
             }
             _g.DrawImage(bitmap, (int)x, (int)y, (int)width, (int)height);
         }
+        protected override void OnClosed(_S.EventArgs e)
+        {
+            base.OnClosed(e);
+            _S.Environment.Exit(0);
+        }
         protected override void OnResize(_S.EventArgs e)
         {
             base.OnResize(e);
             this.Refresh();
+            _g = base.CreateGraphics();
         }
         public double ZUFALLSZAHL(double max)
         {

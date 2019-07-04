@@ -27,7 +27,7 @@ namespace ProLernParser
         }
         public Error(CompilerError error)
         {
-            Line = error.Line-119;
+            Line = error.Line-129;
             if (Line < 1) Valid = false;
              Title = "ERROR: " + error.ErrorNumber;
             Message = error.ErrorText;

@@ -21,7 +21,6 @@ namespace ProLernParser
 
         public Translator()
         {
-
         }
         public string Parse(string code)
         {
@@ -70,24 +69,24 @@ namespace ProLernParser
                 else if (parse(line, out newLine, "FENSTER", "public class _proLernForm : _proLernFormProto{")) ;
                 else if (parse(line, out newLine, "FENSTERKONSTRUKTOR", "public _proLernForm(){")) ;
                 else if (parse(line, out newLine, "OEFFNEFENSTER", "_SWF.Application.Run(new _proLernForm());")) ;
-                else if (parseFunction(line, out newLine, "FENSTERGROESSE", "base.Width=(int)<arg0>;base.Height=(int)<arg1>;")) ;
-                else if (parseFunction(line, out newLine, "KNOPF", "public _button <#> = new _button(){Left = (int)<arg0>,Top = (int)<arg1>,Width = (int)<arg2>,Height = (int)<arg3>,Text=<arg4>,Font = new System.Drawing.Font(<arg5>, (float)<arg6>),clickname=\"<arg7>\"};")) ;
-                else if (parseFunction(line, out newLine, "WORTBOX", "public _SWF.TextBox <#> = new _SWF.TextBox(){Left = (int)<arg0>,Top = (int)<arg1>,Width = (int)<arg2>,Height = (int)<arg3>,Font = new System.Drawing.Font(<arg4>, (float)<arg5>)};")) ;
+                else if (parseFunction(line, out newLine, "FENSTERGROESSE", "base.Width=<arg0/int>;base.Height=<arg1/int>;")) ;
+                else if (parseFunction(line, out newLine, "KNOPF", "public _button <#> = new _button(){Left = <arg0/int>,Top = <arg1/int>,Width = <arg2/int>,Height = <arg3/int>,Text=<arg4>,Font = new System.Drawing.Font(<arg5>, <arg6/float>),clickname=\"<arg7>\"};")) ;
+                else if (parseFunction(line, out newLine, "WORTBOX", "public _SWF.TextBox <#> = new _SWF.TextBox(){Multiline = true,ScrollBars = _SWF.ScrollBars.Vertical,Left = <arg0/int>,Top = <arg1/int>,Width = <arg2/int>,Height = <arg3/int>,Font = new System.Drawing.Font(<arg4>, <arg5/float>)};")) ;
                 else if (parse(line, out newLine, "KNOPFKLICK", "public void <#>(object _sender, _S.EventArgs _e){")) ;
                 else if (parse(line, out newLine, "FENSTERLOESCHEN", "base.Refresh();")) ;
                 else if (parse(line, out newLine, "FENSTERNEUZEICHNEN", "protected override void OnPaint(_SWF.PaintEventArgs _e){base.OnPaint(_e);this._g.Dispose(); var _g = _e.Graphics; this._g = this.CreateGraphics();")) ;
                 else if (parseFunction(line, out newLine, "MAUSKLICK", "protected override void OnMouseClick(_SWF.MouseEventArgs _e){base.OnMouseClick(_e);double <arg0> = _e.X,<arg1> = _e.Y;")) ;
                 else if (parseColor(line, out newLine, "FENSTERFARBE", "base.BackColor = _SD.Color.<color>;")) ;
                 else if (parseColor(line, out newLine, "PINSEL", "_pinsel = new _SD.SolidBrush(_SD.Color.<color>);")) ;
-                else if (parseFunction(line, out newLine, "STIFT", "_stift = new _SD.Pen(_SD.Color.<arg0/color>,(float)<arg1>);")) ;
+                else if (parseFunction(line, out newLine, "STIFT", "_stift = new _SD.Pen(_SD.Color.<arg0/color>,<arg1/float>);")) ;
 
-                else if (parseFunction(line, out newLine, "RECHTECKFUELLEN", "_g.FillRectangle(_pinsel, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
-                else if (parseFunction(line, out newLine, "ELLIPSEFUELLEN", "_g.FillEllipse(_pinsel, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
-                else if (parseFunction(line, out newLine, "RECHTECK", "_g.DrawRectangle(_stift, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
-                else if (parseFunction(line, out newLine, "ELLIPSE", "_g.DrawEllipse(_stift, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
-                else if (parseFunction(line, out newLine, "ZEICHNEWORT", "_g.DrawString(<arg0>,new _SD.Font(<arg1>,(float)<arg2>),new _SD.SolidBrush(_SD.Color.<arg3/color>),new _SD.Point((int)<arg4>,(int)<arg5>));")) ;
-                else if (parseFunction(line, out newLine, "LINIE", "_g.DrawLine(_stift,new _SD.Point((int)<arg0>,(int)<arg1>), new _SD.Point((int)<arg2>, (int)<arg3>));")) ;
-                else if (parseFunction(line, out newLine, "BILD", "_drawBitmap(_g,<arg0>, <arg1>, <arg2>, <arg3>, <arg4>);")) ;
+                else if (parseFunction(line, out newLine, "RECHTECKFUELLEN", "_g.FillRectangle(_pinsel, new _SD.Rectangle(<arg0/int>, <arg1/int>, <arg2/int>, <arg3/int>));")) ;
+                else if (parseFunction(line, out newLine, "ELLIPSEFUELLEN", "_g.FillEllipse(_pinsel, new _SD.Rectangle(<arg0/int>, <arg1/int>, <arg2/int>, <arg3/int>));")) ;
+                else if (parseFunction(line, out newLine, "RECHTECK", "_g.DrawRectangle(_stift, new _SD.Rectangle(<arg0/int>, <arg1/int>, <arg2/int>, <arg3/int>));")) ;
+                else if (parseFunction(line, out newLine, "ELLIPSE", "_g.DrawEllipse(_stift, new _SD.Rectangle(<arg0/int>, <arg1/int>, <arg2/int>, <arg3/int>));")) ;
+                else if (parseFunction(line, out newLine, "ZEICHNEWORT", "_g.DrawString(<arg0>,new _SD.Font(<arg1>,<arg2/float>),new _SD.SolidBrush(_SD.Color.<arg3/color>),new _SD.Point(<arg4/int>,<arg5/int>));")) ;
+                else if (parseFunction(line, out newLine, "LINIE", "_g.DrawLine(_stift,new _SD.Point(<arg0/int>,<arg1/int>), new _SD.Point(<arg2/int>, <arg3/int>));")) ;
+                else if (parseFunction(line, out newLine, "BILD", "_drawBitmap(_g,<arg0>, <arg1/int>, <arg2/int>, <arg3/int>, <arg4/int>);")) ;
 
                 else if (parse(line, out newLine, "VERSUCH", "try{")) ;
                 else if (parse(line, out newLine, "FEHLER", "catch{")) ;
@@ -102,6 +101,8 @@ namespace ProLernParser
                 }
                 newLine = newLine.Replace("~LAENGE", ".Length");
                 newLine = newLine.Replace("~INHALT", ".Text");
+                newLine = newLine.Replace("X-Position", "X_Position");
+                newLine = newLine.Replace("Y-Position", "Y_Position");
                 if (castArray) newLine = newLine.Replace("[", "[(int)");
                 body += newLine;
             }
@@ -153,9 +154,13 @@ namespace ProLernParser
                 }
                 for (int i = 0; i < args.Length; i++)
                 {
+                    string arg = args[i].Trim();
                     result = result.Replace("<#>", name);
-                    result = result.Replace("<arg" + i + ">", args[i].Trim());
-                    result = result.Replace("<arg" + i + "/color>", getColor(args[i].Trim()));
+                    result = result.Replace("<arg" + i + ">", arg);
+                    result = result.Replace("<arg" + i + "/byte>", "(byte)(" + arg + ")");
+                    result = result.Replace("<arg" + i + "/int>", "(int)(" + arg + ")");
+                    result = result.Replace("<arg" + i + "/float>", "(float)(" + arg + ")");
+                    result = result.Replace("<arg" + i + "/color>", getColor(arg));
                 }
                 result = result.Replace('\n', ' ');
                 return result + "\r\n";
