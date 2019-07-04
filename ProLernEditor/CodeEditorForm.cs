@@ -84,10 +84,10 @@ namespace ProLernEditor
             performer.Compile(cscode, "start.exe");
             int count = 0;
             int max = performer.Errors.Count;
-            foreach (CompilerError error in performer.Errors)
+            foreach (var error in performer.Errors)
             {
                 MessageBox.Show(this,
-                    ((error.Line - 10)) + ": " + error.ErrorText, "(" + (count + 1) + " / " + max + ") ERROR: " + error.ErrorNumber,
+                    ((error.Line)) + ":  " + error.Message, "(" + (count + 1) + " / " + max + ") " + error.Title,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 if (count++ >= 10) break;
             }
@@ -100,10 +100,10 @@ namespace ProLernEditor
             {
                 int count = 0;
                 int max = performer.Errors.Count;
-                foreach (CompilerError error in performer.Errors)
+                foreach (var error in performer.Errors)
                 {
                     MessageBox.Show(this,
-                        ((error.Line - 10)) + ": " + error.ErrorText, "(" + (count + 1) + "/" + max + ") ERROR: " + error.ErrorNumber,
+                        ((error.Line)) + ":  " + error.Message, "(" + (count + 1) + " / " + max + ") " + error.Title,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     if (count++ >= 10) break;
                 }

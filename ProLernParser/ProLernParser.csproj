@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="environment.cs" />
+    <Compile Include="Error.cs" />
     <Compile Include="Performer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +105,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="error.png" />
     <Content Include="fpl.ico" />
   </ItemGroup>
   <ItemGroup>

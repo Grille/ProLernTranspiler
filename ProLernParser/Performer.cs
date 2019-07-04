@@ -16,7 +16,7 @@ namespace ProLernParser
 {
     public class Performer
     {
-        public CompilerErrorCollection Errors;
+        public List<Error> Errors;
         public Process process;
         [SecurityPermissionAttribute(SecurityAction.Demand, ControlThread = true)]
         public bool Compile(string cscode, string dst)
@@ -39,7 +39,8 @@ namespace ProLernParser
                 parameter.OutputAssembly = dst;
 
                 var result = compiler.CompileAssemblyFromSource(parameter, cscode);
-                Errors = result.Errors;
+
+                Errors = Error.GetErrors(result.Errors);
 
                 if (result.Errors.Count > 0)
                 {

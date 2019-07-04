@@ -18,6 +18,7 @@ namespace ProLernParser
 {   
     public class Translator
     {
+
         public Translator()
         {
 
@@ -33,8 +34,8 @@ namespace ProLernParser
                 ref string line = ref lines[i];
                 string newLine = "";
 
-                if  (parse(line, out newLine, "START", "public void START(){try{")) { castArray = false; }
-                else if (parse(line, out newLine, "STOPP", "}catch{_S.Console.WriteLine(\"Fehler.\");_S.Console.ReadKey();}_S.Console.WriteLine(\"Bitte eine Taste druecken, um das Programm zu beenden.\");_S.Console.ReadKey();}")) ;
+                if  (parse(line, out newLine, "START", "public void START(){")) { castArray = false; }
+                else if (parse(line, out newLine, "STOPP", "_S.Console.WriteLine(\"Bitte eine Taste druecken, um das Programm zu beenden.\");_S.Console.ReadKey();}")) ;
                 else if (parse(line, out newLine, "ENDE", "}")) ;
                 else if (parse(line, out newLine, "AUSGABE", "_S.Console.WriteLine(<#>);")) ;
                 else if (parse(line, out newLine, "AUSGABEREIHE", "_S.Console.Write(<#>);")) ;
@@ -86,7 +87,7 @@ namespace ProLernParser
                 else if (parseFunction(line, out newLine, "ELLIPSE", "_g.DrawEllipse(_stift, new _SD.Rectangle((int)<arg0>, (int)<arg1>, (int)<arg2>, (int)<arg3>));")) ;
                 else if (parseFunction(line, out newLine, "ZEICHNEWORT", "_g.DrawString(<arg0>,new _SD.Font(<arg1>,(float)<arg2>),new _SD.SolidBrush(_SD.Color.<arg3/color>),new _SD.Point((int)<arg4>,(int)<arg5>));")) ;
                 else if (parseFunction(line, out newLine, "LINIE", "_g.DrawLine(_stift,new _SD.Point((int)<arg0>,(int)<arg1>), new _SD.Point((int)<arg2>, (int)<arg3>));")) ;
-                else if (parseFunction(line, out newLine, "BILD", "_drawBitmap(<arg0>, <arg1>, <arg2>, <arg3>, <arg4>);")) ;
+                else if (parseFunction(line, out newLine, "BILD", "_drawBitmap(_g,<arg0>, <arg1>, <arg2>, <arg3>, <arg4>);")) ;
 
                 else if (parse(line, out newLine, "VERSUCH", "try{")) ;
                 else if (parse(line, out newLine, "FEHLER", "catch{")) ;
@@ -112,7 +113,6 @@ namespace ProLernParser
                 Height = 0,
                 Font = new System.Drawing.Font("", 3)
             };
-            
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = "ProLernParser.environment.cs";
 
@@ -120,6 +120,7 @@ namespace ProLernParser
             using (var reader = new StreamReader(stream))
             {
                 string result = reader.ReadToEnd().Replace("///<include>code", body);
+                //Console.WriteLine(result);
                 return result;
             }
         }

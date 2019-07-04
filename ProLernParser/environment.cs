@@ -13,10 +13,12 @@ namespace ProLernProgram
     }
     public class _proLernFormProto : _SWF.Form
     {
+        public _SI.StreamWriter _writer;
+        public _SI.StreamReader _reader;
         public _SD.Pen _stift = new _SD.Pen(_SD.Color.Black, 1);
         public _SD.SolidBrush _pinsel = new _SD.SolidBrush(_SD.Color.Black);
         public _SD.Graphics _g;
-        public _SCG.SortedList<string, _SD.Bitmap> _bitmaps;
+        public _SCG.SortedList<string, _SD.Bitmap> _bitmaps = new _SCG.SortedList<string, _SD.Bitmap>();
 
         public _proLernFormProto()
         {
@@ -36,19 +38,31 @@ namespace ProLernProgram
                         {
                             var but = (_button)control;
                             var method = type.GetMethod(but.clickname);
-                            var onclick = (_S.Action<object, _S.EventArgs>)_S.Delegate.CreateDelegate(typeof(_S.Action<object, _S.EventArgs>), this, method);
-                            but.Click += new _S.EventHandler(onclick);
+                            if (method != null)
+                            {
+                                var onclick = (_S.Action<object, _S.EventArgs>)_S.Delegate.CreateDelegate(typeof(_S.Action<object, _S.EventArgs>), this, method);
+                                but.Click += new _S.EventHandler(onclick);
+                            }
                         }
                         this.Controls.Add(control);
                     }
                 }
             }
         }
-        public void _drawBitmap(string path, double x, double y, double width, double height)
+        public void _drawBitmap(_SD.Graphics _g, string path, double x, double y, double width, double height)
         {
             _SD.Bitmap bitmap;
             if (_bitmaps.TryGetValue(path, out bitmap)) ;
-            else _bitmaps.Add(path, bitmap = new _SD.Bitmap(path));
+            else if (_SI.File.Exists(path)) _bitmaps.Add(path, bitmap = new _SD.Bitmap(path));
+            else
+            {
+                bitmap = new _SD.Bitmap(64, 64);
+                using (var g = _SD.Graphics.FromImage(bitmap))
+                {
+                    g.DrawRectangle(new _SD.Pen(_SD.Color.Red, 4), new _SD.Rectangle(0, 0, 64, 64));
+                }
+                _bitmaps.Add(path, bitmap);
+            }
             _g.DrawImage(bitmap, (int)x, (int)y, (int)width, (int)height);
         }
         protected override void OnResize(_S.EventArgs e)
