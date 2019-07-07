@@ -24,7 +24,10 @@ namespace ProLernEditor
             LineBack = Color.WhiteSmoke;
             LineFore = Color.DarkCyan;
             Crusor = Text = Number = Symbol = Color.Black;
-            Flow = Type = Action = Calc = Color.Blue;
+            Flow = Color.DarkViolet;
+            Type = Color.DarkCyan;
+            Action = Color.Blue;
+            Calc = Color.Blue;
             Comment = Color.Green;
             String = Color.DarkRed;
         }

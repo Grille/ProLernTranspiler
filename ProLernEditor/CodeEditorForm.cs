@@ -209,5 +209,10 @@ namespace ProLernEditor
         {
             performer.Kill();
         }
+
+        private void ToolStripComboBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

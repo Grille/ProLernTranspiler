@@ -32,7 +32,6 @@ namespace ProLernParser
                 bool castArray = true;
                 ref string line = ref lines[i];
                 string newLine = "";
-
                 if  (parse(line, out newLine, "START", "public void START(){")) { castArray = false; }
                 else if (parse(line, out newLine, "STOPP", "_S.Console.WriteLine(\"Bitte eine Taste druecken, um das Programm zu beenden.\");_S.Console.ReadKey();}")) ;
                 else if (parse(line, out newLine, "ENDE", "}")) ;
@@ -44,14 +43,14 @@ namespace ProLernParser
                 else if (parse(line, out newLine, "ZAHLEINGABE", "<#>=double.Parse(_S.Console.ReadLine());")) ;
                 else if (parse(line, out newLine, "WORTEINGABE", "<#>=_S.Console.ReadLine();")) ;
                 else if (parse(line, out newLine, "EINGABE", "_S.Console.ReadKey();")) ;
-                else if (parse(line, out newLine, "ZAHLFELD", "double[] <#>;", (input) => input.Replace("[", "=new double[(int)"))) { castArray = false; }
-                else if (parse(line, out newLine, "WORTFELD", "string[] <#>;", (input) => input.Replace("[", "=new string[(int)"))) { castArray = false; }
+                else if (parse(line, out newLine, "ZAHLFELD", "_array<double> <#>;", (input) => input.Replace("[", "=new _array<double>((int)(").Replace("]","))"))) { castArray = false; }
+                else if (parse(line, out newLine, "WORTFELD", "_array<string> <#>;", (input) => input.Replace("[", "=new _array<string>((int)(").Replace("]", "))"))) { castArray = false; }
                 else if (parse(line, out newLine, "FALLS", "if(<#>){", (input) => Regex.Replace(input, "[^!><=]=", "==").Replace("UND", "&&").Replace("ODER", "||"))) ;
                 else if (parse(line, out newLine, "SONST", "else{")) ;
                 else if (parse(line, out newLine, "SOLANGE", "}while(<#>);", (input) => Regex.Replace(input, "[^!><=]=", "==").Replace("UND", "&&").Replace("ODER", "||"))) ;
                 else if (parse(line, out newLine, "WIEDERHOLE", "do{")) ;
-                else if (parse(line, out newLine, "UNTERPROGRAMM", "public void <#>{", (input) => input.Replace("ZAHLFELD", "double[]").Replace("WORTFELD", "string[]").Replace("ZAHL", "double").Replace("WORT", "string"))) { castArray = false; }
-                else if (parse(line, out newLine, "FUNKTION", "public <#>{", (input) => input.Replace("ZAHLFELD", "double[]").Replace("WORTFELD", "string[]").Replace("ZAHL", "double").Replace("WORT", "string"))) { castArray = false; }
+                else if (parse(line, out newLine, "UNTERPROGRAMM", "public void <#>{", (input) => input.Replace("ZAHLFELD", "_array<double>").Replace("WORTFELD", "_array<string>").Replace("ZAHL", "double").Replace("WORT", "string"))) { castArray = false; }
+                else if (parse(line, out newLine, "FUNKTION", "public <#>{", (input) => input.Replace("ZAHLFELD", "_array<double>").Replace("WORTFELD", "_array<string>").Replace("ZAHL", "double").Replace("WORT", "string"))) { castArray = false; }
                 else if (parse(line, out newLine, "RUECKGABE", "return <#>;")) ;
                 else if (parseColor(line, out newLine, "FARBE", "_S.Console.ForegroundColor = _S.ConsoleColor.<color>;")) ;
                 else if (parse(line, out newLine, "BEMERKUNG:", "//<#>")) ;

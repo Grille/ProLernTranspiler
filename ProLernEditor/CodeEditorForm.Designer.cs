@@ -45,6 +45,8 @@
             this.eigenschatenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.befehlslisteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -177,9 +179,27 @@
             // 
             // optionenToolStripMenuItem
             // 
+            this.optionenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.themeToolStripMenuItem});
             this.optionenToolStripMenuItem.Name = "optionenToolStripMenuItem";
             this.optionenToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.optionenToolStripMenuItem.Text = "Optionen";
+            // 
+            // themeToolStripMenuItem
+            // 
+            this.themeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripComboBox1});
+            this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
+            this.themeToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.themeToolStripMenuItem.Text = "Theme";
+            // 
+            // toolStripComboBox1
+            // 
+            this.toolStripComboBox1.Items.AddRange(new object[] {
+            "Visual Studio",
+            "Fancy"});
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
             // 
             // befehlslisteToolStripMenuItem
             // 
@@ -224,6 +244,8 @@
         private System.Windows.Forms.ToolStripMenuItem extrasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem befehlslisteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem themeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
     }
 }
 
