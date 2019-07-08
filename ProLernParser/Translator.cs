@@ -98,10 +98,16 @@ namespace ProLernParser
                     }
                     else newLine = line + ";\r\n";
                 }
-                newLine = newLine.Replace("~LAENGE", ".Length");
-                newLine = newLine.Replace("~INHALT", ".Text");
                 newLine = newLine.Replace("X-Position", "X_Position");
                 newLine = newLine.Replace("Y-Position", "Y_Position");
+                newLine = newLine.Replace("Ü", "UE");
+                newLine = newLine.Replace("Ö", "OE");
+                newLine = newLine.Replace("Ä", "AE");
+                newLine = newLine.Replace("ü", "ue");
+                newLine = newLine.Replace("ö", "oe");
+                newLine = newLine.Replace("ä", "ae");
+                newLine = newLine.Replace("~LAENGE", ".Length");
+                newLine = newLine.Replace("~INHALT", ".Text");
                 if (castArray) newLine = newLine.Replace("[", "[(int)");
                 body += newLine;
             }

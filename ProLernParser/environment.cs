@@ -95,12 +95,12 @@ namespace ProLernProgram
             array = new T[size];
         }
 
-        public int Length
+        public double Length
         {
             get { return array.Length; }
             set
             {
-                _S.Array.Resize(ref array, value);
+                _S.Array.Resize(ref array, (int)value);
             }
         }
         public T this[int i]

@@ -86,7 +86,7 @@ namespace ProLernEditor
             int end = control.GetLineEnd(args.Position + 2);
             Highlight(begin, end);
         }
-        public void Highlight(int begin,int end)
+        public void Highlight(int begin, int end)
         {
             if (begin < 0) begin = 0;
             if (end > control.Text.Length) end = control.Text.Length;
@@ -161,8 +161,9 @@ namespace ProLernEditor
                 else if (highlightWord(ref code, ref index, "ZUFALLSZAHL", Theme.Style.Action)) ;
                 else if (highlightWord(ref code, ref index, "WORTINZAHL", Theme.Style.Action)) ;
 
-                else if (highlightSymbols(ref code, ref index, "+-/*%&|=<>[]()", Theme.Style.Symbol)) ;
-                else if (highlightSymbols(ref code, ref index, "0123456789", Theme.Style.Number)) ;
+                else if (highlightSymbols(ref code, ref index, null, Theme.Style.Symbol)) ;
+                else if (highlightNumbers(ref code, ref index, null, Theme.Style.Number)) ;
+
                 else
                 {
                     control.SetStyling(1, (int)Theme.Style.Text);
@@ -173,16 +174,42 @@ namespace ProLernEditor
 
         private bool highlightSymbols(ref string code, ref int index,string symbols, Theme.Style style)
         {
-            for (int i = 0; i < symbols.Length; i++)
+            char symbol = code[index];
+            if (!(symbol >= '0' && symbol <= '9') && !(symbol >= 'A' && symbol <= 'Z') && !(symbol >= 'a' && symbol <= 'z') && !(symbol >= 128))
             {
-                if (code[index] == symbols[i])
+                control.SetStyling(1, (int)style);
+                index += 1;
+                return true;
+            }
+            return false;
+        }
+        private bool highlightNumbers(ref string code, ref int index, string symbols, Theme.Style style)
+        {
+            if (index > 0)
+            {
+                char symbol = code[index - 1];
+                if (!(symbol >= '0' && symbol <= '9') && !(symbol >= 'A' && symbol <= 'Z') && !(symbol >= 'a' && symbol <= 'z') && !(symbol >= 128))
                 {
-                    control.SetStyling(1, (int)style);
-                    index += 1;
-                    return true;
+                    int max = control.GetLineEnd(index);
+                    int length = 0;
+                    while (index < max)
+                    {
+                        if (code[index] >= '0' && code[index] <= '9')
+                        {
+                            length += 1;
+                            index += 1;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    control.SetStyling(length, (int)style);
+                    return length > 0;
                 }
             }
             return false;
+
         }
         private bool highlightWord(ref string code, ref int index, string word, Theme.Style style)
         {

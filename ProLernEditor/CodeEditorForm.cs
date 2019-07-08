@@ -40,7 +40,7 @@ namespace ProLernEditor
                 Action = Color.FromArgb(255, 255, 128),
                 Comment = Color.LimeGreen,
                 Symbol = Color.LightGray,
-                Number = Color.LightGray,
+                Number = Color.FromArgb(128, 211, 128),
                 String = Color.FromArgb(255, 156, 100),
                 LineBack = Color.FromArgb(45 / 2, 60 / 2, 65 / 2),
                 LineFore = Color.LimeGreen,
