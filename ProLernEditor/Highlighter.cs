@@ -194,7 +194,7 @@ namespace ProLernEditor
                     int length = 0;
                     while (index < max)
                     {
-                        if (code[index] >= '0' && code[index] <= '9')
+                        if (code[index] >= '0' && code[index] <= '9' || code[index] == '.')
                         {
                             length += 1;
                             index += 1;

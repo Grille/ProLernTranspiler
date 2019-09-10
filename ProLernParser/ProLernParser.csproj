@@ -67,7 +67,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
@@ -107,7 +106,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fpl.ico" />
     <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
