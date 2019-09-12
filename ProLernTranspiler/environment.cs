@@ -95,6 +95,22 @@ namespace ProLernProgram
             array = new T[size];
         }
 
+        public static _array<T> operator +(_array<T> lhs, T rhs)
+        {
+            int index = lhs.array.Length;
+            lhs.Length = index + 1;
+            lhs.array[index] = rhs;
+            return lhs;
+        }
+
+        public static _array<T> operator +(_array<T> lhs, _array<T> rhs)
+        {
+            int offset = (int)lhs.Length;
+            lhs.Length += rhs.Length;
+            _S.Array.Copy(rhs.array, 0, lhs.array, offset, (int)rhs.Length);
+            return lhs;
+        }
+
         public double Length
         {
             get { return array.Length; }
@@ -107,6 +123,19 @@ namespace ProLernProgram
         {
             get { return array[i]; }
             set { array[i] = value; }
+        }
+        public override string ToString()
+        {
+            string result = "("+ array.Length + ") [";
+            for (int i = 0; i < array.Length; i++)
+            {
+                result += ""+array[i];
+                if (i < array.Length - 1)
+                    result += ", ";
+                else
+                    result += "]";
+            }
+            return result;
         }
     }
     public class Program

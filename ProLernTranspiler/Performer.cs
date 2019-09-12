@@ -25,7 +25,6 @@ namespace ProLernTranspiler
             Kill();
             using (var codeProvider = new CSharpCodeProvider())
             {
-                var compiler = codeProvider.CreateCompiler();
                 var parameter = new CompilerParameters();
                 parameter.ReferencedAssemblies.Add("microsoft.csharp.dll");
                 parameter.ReferencedAssemblies.Add("system.dll");
@@ -38,7 +37,7 @@ namespace ProLernTranspiler
                 parameter.GenerateExecutable = true;
                 parameter.OutputAssembly = dst;
 
-                var result = compiler.CompileAssemblyFromSource(parameter, cscode);
+                var result = codeProvider.CompileAssemblyFromSource(parameter, cscode);
 
                 Errors = Error.GetErrors(result.Errors);
 
