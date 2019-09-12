@@ -12,7 +12,7 @@ using System.Globalization;
 using System.Security.Permissions;
 using System.Diagnostics;
 
-namespace ProLernParser
+namespace ProLernTranspiler
 {
     public class Performer
     {

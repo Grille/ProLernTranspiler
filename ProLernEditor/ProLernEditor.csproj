@@ -96,14 +96,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProLernParser\ProLernParser.csproj">
-      <Project>{5c506df8-fab1-4532-bc0b-55da1de74100}</Project>
-      <Name>ProLernParser</Name>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </ProjectReference>
+    <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="logo.ico" />
+    <ProjectReference Include="..\ProLernTranspiler\ProLernTranspiler.csproj">
+      <Project>{5c506df8-fab1-4532-bc0b-55da1de74100}</Project>
+      <Name>ProLernTranspiler</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

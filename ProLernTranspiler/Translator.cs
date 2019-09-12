@@ -14,7 +14,7 @@ using System.Security.Permissions;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace ProLernParser
+namespace ProLernTranspiler
 {   
     public class Translator
     {
@@ -120,7 +120,7 @@ namespace ProLernParser
                 Font = new System.Drawing.Font("", 3)
             };
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "ProLernParser.environment.cs";
+            var resourceName = "ProLernTranspiler.environment.cs";
 
             using (var stream = assembly.GetManifestResourceStream(resourceName))
             using (var reader = new StreamReader(stream))
