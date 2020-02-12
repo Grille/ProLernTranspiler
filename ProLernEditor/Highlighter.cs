@@ -103,7 +103,7 @@ namespace ProLernEditor
                 else if (highlightWord(ref code, ref index, "START", Theme.Style.Flow)) ;
                 else if (highlightWord(ref code, ref index, "STOPP", Theme.Style.Flow)) ;
                 else if (highlightWord(ref code, ref index, "AUSGABE", Theme.Style.Action)) ;
-                else if (highlightWord(ref code, ref index, "AUSGABEREIHE", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "AUSGABE-ZEICHEN", Theme.Style.Action)) ;
                 else if (highlightWord(ref code, ref index, "ENDE", Theme.Style.Flow)) ;
                 else if (highlightWord(ref code, ref index, "RECHNEN", Theme.Style.Calc)) ;
                 else if (highlightWord(ref code, ref index, "ZAHL", Theme.Style.Type)) ;
@@ -121,6 +121,7 @@ namespace ProLernEditor
                 else if (highlightWord(ref code, ref index, "FUNKTION", Theme.Style.Flow)) ;
                 else if (highlightWord(ref code, ref index, "RUECKGABE", Theme.Style.Flow)) ;
                 else if (highlightWord(ref code, ref index, "FARBE", Theme.Style.Action)) ;
+                else if (highlightWord(ref code, ref index, "FARBE-HINTERGRUND", Theme.Style.Action)) ;
 
                 else if (highlightWord(ref code, ref index, "BILDSCHIRMLOESCHEN", Theme.Style.Action)) ;
                 else if (highlightWord(ref code, ref index, "SCHREIBEN-OEFFNEN", Theme.Style.Action)) ;

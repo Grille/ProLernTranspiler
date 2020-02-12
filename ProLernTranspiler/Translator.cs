@@ -36,7 +36,7 @@ namespace ProLernTranspiler
                 else if (parse(line, out newLine, "STOPP", "_S.Console.WriteLine(\"Bitte eine Taste druecken, um das Programm zu beenden.\");_S.Console.ReadKey();}")) ;
                 else if (parse(line, out newLine, "ENDE", "}")) ;
                 else if (parse(line, out newLine, "AUSGABE", "_S.Console.WriteLine(<#>);")) ;
-                else if (parse(line, out newLine, "AUSGABEREIHE", "_S.Console.Write(<#>);")) ;
+                else if (parse(line, out newLine, "AUSGABE-ZEICHEN", "_S.Console.Write(<#>);")) ;
                 else if (parse(line, out newLine, "RECHNEN", "<#>;")) ;
                 else if (parse(line, out newLine, "ZAHL", "double <#>;")) ;
                 else if (parse(line, out newLine, "WORT", "string <#>;")) ;
@@ -53,6 +53,7 @@ namespace ProLernTranspiler
                 else if (parse(line, out newLine, "FUNKTION", "public <#>{", (input) => input.Replace("ZAHLFELD", "_array<double>").Replace("WORTFELD", "_array<string>").Replace("ZAHL", "double").Replace("WORT", "string"))) { castArray = false; }
                 else if (parse(line, out newLine, "RUECKGABE", "return <#>;")) ;
                 else if (parseColor(line, out newLine, "FARBE", "_S.Console.ForegroundColor = _S.ConsoleColor.<color>;")) ;
+                else if (parseColor(line, out newLine, "FARBE-HINTERGRUND", "_S.Console.BackgroundColor = _S.ConsoleColor.<color>;")) ;
                 else if (parse(line, out newLine, "BEMERKUNG:", "//<#>")) ;
                 else if (parse(line, out newLine, "BILDSCHIRMLOESCHEN", "_S.Console.Clear();")) ;
 
@@ -192,8 +193,14 @@ namespace ProLernTranspiler
                 case "BLAU": return "Blue";
                 case "LILA": return "Magenta";
                 case "TUERKIS": return "Cyan";
+                case "DUNKEL-ROT": return "DarkRed";
+                case "DUNKEL-GELB": return "DarkYellow";
+                case "DUNKEL-GRUEN": return "DarkGreen";
+                case "DUNKEL-BLAU": return "DarkBlue";
+                case "DUNKEL-LILA": return "DarkMagenta";
+                case "DUNKEL-TUERKIS": return "DarkCyan";
                 case "WEISS": return "White";
-                case "SCHWARTZ": return "Black";
+                case "SCHWARZ": return "Black";
                 default: return "Gray";
             }
         }
