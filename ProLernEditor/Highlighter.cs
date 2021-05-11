@@ -35,8 +35,8 @@ namespace ProLernEditor
             control.CaretForeColor = theme.Crusor;
             control.Styles[Style.Default].BackColor = theme.Background;
             control.Styles[Style.Default].ForeColor = theme.Text;
-            control.Styles[Style.Default].Font = "consolas";
-            control.Styles[Style.Default].Size = 10;
+            control.Styles[Style.Default].Font = "courier new";
+            control.Styles[Style.Default].Size = 11;
             control.StyleClearAll();
 
             control.SetSelectionBackColor(true,theme.Selection);

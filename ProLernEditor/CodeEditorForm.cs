@@ -56,7 +56,7 @@ namespace ProLernEditor
             codeBox.Height -= menuStrip1.Height;
             codeBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
 
-            codeBox.AddText("START \n  AUSGABE \"Hallo Welt\"\nSTOPP ");
+            codeBox.AddText("START\n  AUSGABE \"Hallo Welt\"\nSTOPP");
 
             performer = new Performer();
             translator = new Translator();
@@ -114,7 +114,7 @@ namespace ProLernEditor
 
         private void neuToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            codeBox.Text = "START \n  AUSGABE \"Hallo Welt\"\nSTOPP ";
+            codeBox.Text = "START\n  AUSGABE \"Hallo Welt\"\nSTOPP";
         }
 
         private void öffnenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -213,6 +213,16 @@ namespace ProLernEditor
         private void ToolStripComboBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void befehlslisteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void befehlslisteToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            MessageBox.Show("START\nSTOPP","Title");
         }
     }
 }

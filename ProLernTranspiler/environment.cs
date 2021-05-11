@@ -119,10 +119,10 @@ namespace ProLernProgram
                 _S.Array.Resize(ref array, (int)value);
             }
         }
-        public T this[int i]
+        public T this[double i]
         {
-            get { return array[i]; }
-            set { array[i] = value; }
+            get { return array[(int)i]; }
+            set { array[(int)i] = value; }
         }
         public override string ToString()
         {
